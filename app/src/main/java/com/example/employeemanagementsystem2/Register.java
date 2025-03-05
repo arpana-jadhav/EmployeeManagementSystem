@@ -71,9 +71,9 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
+        currentUser=FirebaseAuth.getInstance().getCurrentUser();
         mAuth= FirebaseAuth.getInstance();
         fstore=FirebaseFirestore.getInstance();
-        uid=currentUser.getUid();
         editTextName=findViewById(R.id.name);
         editTextContact=findViewById(R.id.contact);
         editTextEmail=findViewById(R.id.email);
@@ -133,7 +133,7 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "Enter Confirm Password", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(cpassword!=password){
+                if(!password.equals(cpassword)){
                     Toast.makeText(Register.this, "Password is Not match", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -152,7 +152,8 @@ public class Register extends AppCompatActivity {
                                     Toast.makeText(Register.this, "You are Registered Successfully",
                                             Toast.LENGTH_SHORT).show();
                                     userId=mAuth.getCurrentUser().getUid();
-                                    DocumentReference documentReference=fstore.collection("users").document(uid);
+                                    Log.d(TAG, "onComplete uid : "+userId);
+                                    DocumentReference documentReference=fstore.collection("users").document(userId);
                                     Map<String,Object>user=new HashMap<>();
                                     user.put("Employee Name",name);
                                     user.put("Contact",contact);
