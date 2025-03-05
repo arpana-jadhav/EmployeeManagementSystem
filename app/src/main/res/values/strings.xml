@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Employee  Management System(2)</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="name">Name</string>
+    <string name="contact">Contact</string>
+    <string name="address">Address</string>
+    <string name="Email">Email</string>
+    <string name="click_to_login">Click to login</string>
+    <string name="click_to_register">Click to Register</string>
+    <string name="logout">Logout</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="message">Message</string>
+    <string name="home">Home</string>
+    <string name="notification">Notification</string>
+    <string name="profile">Profile</string>
+    <string name="leave">Leave</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="cpassword">Confirm Password</string>
+</resources>
