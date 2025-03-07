@@ -1,86 +1,69 @@
 package com.example.employeemanagementsystem2;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.textfield.TextInputEditText;
+import com.example.employeemanagementsystem2.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class admin_code extends AppCompatActivity {
-    TextInputEditText editTextName,editTextCode,editTextEmail,editTextPassword;
-    Button buttonVerify;
-    ProgressBar progressBar;
-    TextView textView;
+    FirebaseAuth auth;
+    Button button;
+    TextView textview;
+    FirebaseUser user;
 
+    ActivityMainBinding binding;
 
-    @SuppressLint("MissingInflatedId")
+    DrawerLayout drawerLayout;
+    ImageButton buttonDrawerToggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding=ActivityMainBinding.inflate(getLayoutInflater());
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_admin_code);
+        setContentView(binding.getRoot());
 
-        editTextName=findViewById(R.id.aname);
-        editTextCode=findViewById(R.id.code);
-        editTextEmail=findViewById(R.id.aemail);
-        editTextPassword=findViewById(R.id.apassword);
-        buttonVerify=findViewById(R.id.btn_verify);
-        progressBar=findViewById(R.id.progressBar);
-        textView=findViewById(R.id.backtologin);
+        replaceFragment(new Admin_HomepageeFragment());
 
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),Login.class);
-                startActivity(intent);
-                finish();
+        auth = FirebaseAuth.getInstance();
+
+        user = auth.getCurrentUser();
+        if (user == null) {
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+            startActivity(intent);
+            finish();
+        }
+
+        binding.bottomNavigationView.setOnItemSelectedListener(item->{
+            int id=item.getItemId();
+            if(id==R.id.home){
+                replaceFragment(new Admin_HomepageeFragment());
+            }else if(id==R.id.message){
+                replaceFragment(new MessageFragment());
+            }else if(id==R.id.profile){
+                replaceFragment(new ProfileFragment());
             }
-        });
-
-        buttonVerify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                String aname, code,aemail,apassword;
-                aname = String.valueOf(editTextName.getText());
-                code = String.valueOf(editTextCode.getText());
-                aemail = String.valueOf(editTextEmail.getText());
-                apassword = String.valueOf(editTextPassword.getText());
-
-                if (TextUtils.isEmpty(aname)) {
-                    Toast.makeText(admin_code.this, "Enter Name", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(code)) {
-                    Toast.makeText(admin_code.this, "Enter Code", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(aemail)) {
-                    Toast.makeText(admin_code.this, "Enter Email", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(apassword)) {
-                    Toast.makeText(admin_code.this, "Enter password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-            }
+            return true;
         });
     }
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout,fragment);
+        fragmentTransaction.commit();
+    }
 }
+

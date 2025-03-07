@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -24,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ForgetPassword extends AppCompatActivity {
     private Button btn_forgetpassword;
     private EditText textEmail;
+    TextView loginPage;
     private String email;
     private FirebaseAuth auth;
     @SuppressLint("MissingInflatedId")
@@ -35,8 +37,18 @@ public class ForgetPassword extends AppCompatActivity {
 
         auth=FirebaseAuth.getInstance();
 
+        textEmail=findViewById(R.id.email);
+        loginPage=findViewById(R.id.backtologin);
         btn_forgetpassword=findViewById(R.id.btn_forgetpassword);
 
+        loginPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(getApplicationContext(), Login.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         btn_forgetpassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){

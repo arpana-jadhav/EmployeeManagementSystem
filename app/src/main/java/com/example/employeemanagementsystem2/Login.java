@@ -79,17 +79,7 @@ public class Login extends AppCompatActivity {
                 finish();
             }
         });
-    /*
-        textView=findViewById(R.id.forgetpassword);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),admin_code.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        */
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
