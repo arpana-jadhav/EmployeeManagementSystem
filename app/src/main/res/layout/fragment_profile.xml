@@ -50,7 +50,7 @@
         </androidx.cardview.widget.CardView>
         <!-- Second CardView -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
+            android:id="@+id/Attendance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -72,7 +72,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView3"
+            android:id="@+id/Salary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -149,3 +149,4 @@
     </LinearLayout>
 
 </FrameLayout>
+

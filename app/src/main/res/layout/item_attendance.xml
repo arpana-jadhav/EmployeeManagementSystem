@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/txtUserId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Employee Name"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"/>
+
+    <TextView
+        android:id="@+id/txtStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"/>
+
+    <TextView
+        android:id="@+id/txtTimeIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time In"/>
+
+    <TextView
+        android:id="@+id/txtTimeOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time Out"/>
+</LinearLayout>
