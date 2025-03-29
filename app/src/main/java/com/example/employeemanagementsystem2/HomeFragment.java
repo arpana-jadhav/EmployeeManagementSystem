@@ -14,12 +14,17 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -29,7 +34,8 @@ public class HomeFragment extends Fragment {
     private Button btnCheckIn, btnCheckOut;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
-    private String usersId;
+    private String usersId,email,name;
+    FirebaseUser user;
     private String checkInTime;
 
     public HomeFragment() {
@@ -50,8 +56,10 @@ public class HomeFragment extends Fragment {
         btnCheckOut = view.findViewById(R.id.checkOutButton);
 
         db = FirebaseFirestore.getInstance();
-        auth = FirebaseAuth.getInstance();
-        usersId = auth.getCurrentUser().getUid();
+        user= FirebaseAuth.getInstance().getCurrentUser();
+        usersId = user.getUid();
+        email=user.getEmail();
+        fetchName(usersId);
 
         btnCheckIn.setOnClickListener(v -> markCheckIn());
         btnCheckOut.setOnClickListener(v -> markCheckOut());
@@ -67,10 +75,12 @@ public class HomeFragment extends Fragment {
         attendance.put("checkInTime", checkInTime);
         attendance.put("date", date);
         attendance.put("status", "Checked-In");
+        attendance.put("emailId",email);
+        attendance.put("Employee Name",name);
 
         db.collection("Attendance").document(usersId)
-                .collection(date)
-                .document("record")
+                .collection("Record")
+                .document(date)
                 .set(attendance)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(getActivity(), "Checked-In Successfully!", Toast.LENGTH_SHORT).show();
@@ -85,8 +95,8 @@ public class HomeFragment extends Fragment {
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
         db.collection("Attendance").document(usersId)
-                .collection(date) // Date collection under userId
-                .document("record")
+                .collection("Record")
+                .document(date)
                 .get().addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         String checkInTime = documentSnapshot.getString("checkInTime");
@@ -104,7 +114,7 @@ public class HomeFragment extends Fragment {
                             updateAttendance.put("workDuration", hours + "h " + minutes + "m");
                             updateAttendance.put("status", "Checked-Out");
 
-                            db.collection("Attendance").document(usersId)
+                            db.collection("Attendance").document(usersId).collection("Record").document(date)
                                     .update(updateAttendance)
                                     .addOnSuccessListener(aVoid -> {
                                         Toast.makeText(getActivity(), "Checked-Out Successfully!", Toast.LENGTH_SHORT).show();
@@ -128,5 +138,19 @@ public class HomeFragment extends Fragment {
                         btnCheckOut.setVisibility(View.VISIBLE);
                     }
                 });
+    }
+    public void fetchName(String uid){
+        DocumentReference userRef = db.collection("users").document(uid);
+
+        userRef.get().addOnSuccessListener(document -> {
+            if (document.exists()) {
+                name = document.getString("Employee Name");
+                String email = document.getString("Email");
+            } else {
+                Toast.makeText(requireContext(), "User not found!", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(requireContext(), "Error fetching user: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
     }
 }

@@ -1,5 +1,4 @@
-package com.example.employeemanagementsystem2;
-
+package com.example.employeemanagementsystem2.EmployeAttendance;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +6,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.employeemanagementsystem2.R;
+
 import java.util.List;
 
 public class EmployeeAttendanceAdapter extends RecyclerView.Adapter<EmployeeAttendanceAdapter.ViewHolder> {
@@ -27,7 +29,8 @@ public class EmployeeAttendanceAdapter extends RecyclerView.Adapter<EmployeeAtte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Attendance attendance = attendanceList.get(position);
-        holder.txtUserId.setText("User ID: " + attendance.getUserId());
+        holder.txtEmployeeName.setText("User: " + attendance.getEmployeeName());
+        holder.txtEmailId.setText("Email: " + attendance.getEmailId());
         holder.txtDate.setText("Date: " + attendance.getDate());
         holder.txtStatus.setText("Status: " + attendance.getStatus());
         holder.txtTimeIn.setText("Time In: " + attendance.getTimeIn());
@@ -40,11 +43,12 @@ public class EmployeeAttendanceAdapter extends RecyclerView.Adapter<EmployeeAtte
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtUserId, txtDate, txtStatus, txtTimeIn, txtTimeOut;
+        TextView txtEmployeeName, txtEmailId, txtDate, txtStatus, txtTimeIn, txtTimeOut;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtUserId = itemView.findViewById(R.id.txtUserId);
+            txtEmployeeName = itemView.findViewById(R.id.txtUserName);
+            txtEmailId = itemView.findViewById(R.id.txtEmailId);
             txtDate = itemView.findViewById(R.id.txtDate);
             txtStatus = itemView.findViewById(R.id.txtStatus);
             txtTimeIn = itemView.findViewById(R.id.txtTimeIn);

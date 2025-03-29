@@ -28,7 +28,7 @@
         android:layout_marginTop="50dp">
         <!-- First CardView -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView1"
+            android:id="@+id/PersonalDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"

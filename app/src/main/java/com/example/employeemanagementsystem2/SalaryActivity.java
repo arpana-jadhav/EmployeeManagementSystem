@@ -23,7 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class SalaryActivity extends AppCompatActivity {
         private FirebaseFirestore db;
         private TextView txtEmployeeSalary;
-        private final String employeeId = "userId"; // Replace with dynamic ID
+        private final String employeeId = "userId";
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
